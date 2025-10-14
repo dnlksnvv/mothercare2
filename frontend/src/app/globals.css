@@ -1,0 +1,148 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    transition: all 0.3s ease;
+  }
+
+  /* Оригинальная тема (по умолчанию) */
+  .original-theme {
+    --color-primary: #0ea5e9;
+    --color-primary-hover: #0284c7;
+    --color-secondary: #dd6b20;
+    --color-secondary-hover: #c05621;
+    --color-accent: #f0f9ff;
+    --color-accent-hover: #e0f2fe;
+  }
+
+  /* Пастельная тема DoulaDoo */
+  .doula-theme {
+    --color-primary: #E4A081;          /* Терракотовый (как "Doo" в логотипе) */
+    --color-primary-hover: #D8966F;    /* Темнее для hover */
+    --color-secondary: #FDF1EB;        /* Очень светлый терракотовый для фонов */
+    --color-secondary-hover: #F5D5C6;  /* Темнее для hover */
+    --color-accent: #FDF1EB;           /* Очень светлый терракотовый для фонов */
+    --color-accent-hover: #F5D5C6;     /* Темнее для hover */
+    --color-background: #FDF1EB;       /* Очень светлый терракотовый фон */
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply text-white font-medium py-3 px-6 rounded-xl transition-colors duration-200 shadow-md hover:shadow-lg;
+    background-color: var(--color-primary);
+  }
+  
+  .btn-primary:hover {
+    background-color: var(--color-primary-hover);
+  }
+  
+  .btn-secondary {
+    @apply bg-white hover:bg-neutral-50 font-medium py-3 px-6 rounded-xl border transition-all duration-200 shadow-sm hover:shadow-md;
+    color: var(--color-primary);
+    border-color: var(--color-accent);
+  }
+  
+  .card {
+    @apply bg-white rounded-2xl shadow-card hover:shadow-card-hover transition-shadow duration-300;
+  }
+  
+  .section-padding {
+    @apply py-16 px-4 sm:px-6 lg:px-8;
+  }
+  
+  .container-custom {
+    @apply max-w-7xl mx-auto;
+  }
+  
+  .heading-1 {
+    @apply text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight;
+    word-wrap: break-word;
+    hyphens: auto;
+    color: var(--color-primary);
+  }
+  
+  .heading-2 {
+    @apply text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight;
+    word-wrap: break-word;
+    color: var(--color-primary);
+  }
+  
+  .heading-3 {
+    @apply text-2xl sm:text-3xl font-semibold;
+    word-wrap: break-word;
+    color: var(--color-primary);
+  }
+
+  .text-accent {
+    color: var(--color-secondary);
+  }
+
+  .bg-accent {
+    background-color: var(--color-accent);
+  }
+
+  .bg-accent-hover:hover {
+    background-color: var(--color-accent-hover);
+  }
+
+          .bg-pastel {
+            background-color: var(--color-background);
+          }
+
+          .hero-bg {
+            background: linear-gradient(to bottom right, #f0f9ff, #e0f2fe);
+          }
+
+          .doula-theme .hero-bg {
+            background: linear-gradient(to bottom right, var(--color-accent), var(--color-secondary));
+          }
+  
+  .text-body {
+    @apply text-lg text-neutral-600 leading-relaxed;
+  }
+  
+  .text-body-sm {
+    @apply text-base text-neutral-600 leading-relaxed;
+  }
+}
+
+/* Calendly стили - убираем скроллинг и настраиваем высоту */
+.calendly-inline-widget,
+.calendly-inline-widget iframe {
+  overflow: hidden !important;
+  height: 100% !important;
+}
+
+.calendly-inline-widget iframe {
+  border: none !important;
+  border-radius: 8px !important;
+  min-height: 1000px !important;
+}
+
+/* Убираем внутренний скроллинг Calendly */
+.calendly-inline-widget .calendly-popup-content,
+.calendly-inline-widget .calendly-popup-content .calendly-popup-content-inner,
+.calendly-inline-widget .calendly-popup-content .calendly-popup-content-inner .calendly-popup-content-inner-inner {
+  overflow: hidden !important;
+}
+
+/* Убираем скроллинг у всех iframe Calendly */
+.calendly-inline-widget iframe,
+.calendly-inline-widget iframe body,
+.calendly-inline-widget iframe html {
+  overflow: hidden !important;
+}
+
+/* Скрываем лишние Calendly виджеты */
+.calendly-inline-widget:not(:first-of-type) {
+  display: none !important;
+}
