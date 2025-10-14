@@ -58,37 +58,12 @@ const AIAssistant = () => {
     setIsLoading(true);
 
     try {
-      // Прямой вызов OpenAI API с клиента
-      const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`,
         },
-        body: JSON.stringify({
-          model: 'gpt-3.5-turbo',
-          messages: [
-            {
-              role: 'system',
-              content: `You are a professional doula AI assistant for DoulaDoo. You provide compassionate, evidence-based support and information about:
-              - Birth preparation and labor support
-              - Postpartum care and recovery
-              - Breastfeeding guidance
-              - Newborn care
-              - Emotional support during pregnancy and postpartum
-              - Home birth planning
-              - Birth plan development
-              
-              Always provide warm, supportive responses. If asked about medical concerns, remind users to consult with their healthcare provider. Keep responses concise but helpful.`
-            },
-            {
-              role: 'user',
-              content: inputMessage
-            }
-          ],
-          max_tokens: 300,
-          temperature: 0.7,
-        }),
+        body: JSON.stringify({ message: inputMessage }),
       });
 
       const data = await response.json();
@@ -96,12 +71,12 @@ const AIAssistant = () => {
       if (response.ok) {
         const botResponse = {
           id: messages.length + 2,
-          text: data.choices[0]?.message?.content || 'I apologize, but I couldn\'t generate a response. Please try again.',
+          text: data.response,
           isBot: true,
         };
         setMessages(prev => [...prev, botResponse]);
       } else {
-        throw new Error(data.error?.message || 'Failed to get response');
+        throw new Error(data.error || 'Failed to get response');
       }
     } catch (error) {
       const errorResponse = {
@@ -128,37 +103,12 @@ const AIAssistant = () => {
     setIsLoading(true);
 
     try {
-      // Прямой вызов OpenAI API с клиента
-      const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`,
         },
-        body: JSON.stringify({
-          model: 'gpt-3.5-turbo',
-          messages: [
-            {
-              role: 'system',
-              content: `You are a professional doula AI assistant for DoulaDoo. You provide compassionate, evidence-based support and information about:
-              - Birth preparation and labor support
-              - Postpartum care and recovery
-              - Breastfeeding guidance
-              - Newborn care
-              - Emotional support during pregnancy and postpartum
-              - Home birth planning
-              - Birth plan development
-              
-              Always provide warm, supportive responses. If asked about medical concerns, remind users to consult with their healthcare provider. Keep responses concise but helpful.`
-            },
-            {
-              role: 'user',
-              content: question
-            }
-          ],
-          max_tokens: 300,
-          temperature: 0.7,
-        }),
+        body: JSON.stringify({ message: question }),
       });
 
       const data = await response.json();
@@ -166,12 +116,12 @@ const AIAssistant = () => {
       if (response.ok) {
         const botResponse = {
           id: messages.length + 2,
-          text: data.choices[0]?.message?.content || 'I apologize, but I couldn\'t generate a response. Please try again.',
+          text: data.response,
           isBot: true,
         };
         setMessages(prev => [...prev, botResponse]);
       } else {
-        throw new Error(data.error?.message || 'Failed to get response');
+        throw new Error(data.error || 'Failed to get response');
       }
     } catch (error) {
       const errorResponse = {

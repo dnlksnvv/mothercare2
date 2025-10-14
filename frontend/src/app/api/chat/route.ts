@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 
 const openai = new OpenAI({
-  apiKey: process.env.openai_key,
+  apiKey: process.env.OPENAI_API_KEY,
 });
 
 export async function POST(request: NextRequest) {
@@ -12,6 +12,10 @@ export async function POST(request: NextRequest) {
     if (!message) {
       return NextResponse.json({ error: 'Message is required' }, { status: 400 });
     }
+
+    // Debug: Check if API key is available
+    console.log('API Key available:', !!process.env.OPENAI_API_KEY);
+    console.log('API Key starts with:', process.env.OPENAI_API_KEY?.substring(0, 10));
 
     const completion = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
