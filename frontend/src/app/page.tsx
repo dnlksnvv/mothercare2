@@ -414,10 +414,18 @@ Try Doula AI Assistant
           <div className="grid md:grid-cols-4 gap-8 mb-12">
             <div className="space-y-4">
               <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{backgroundColor: 'var(--color-primary)'}}>
-              <span className="text-white font-bold text-lg">D</span>
+            <div className="w-12 h-12 flex items-center justify-center">
+              <img 
+                src="/logo.png" 
+                alt="DoulaDoo Logo" 
+                className="w-full h-full object-contain"
+              />
             </div>
-                <span className="text-xl font-bold">DoulaDoo</span>
+            <img 
+              src="/logo_txt.png" 
+              alt="DoulaDoo" 
+              className="h-7 object-contain"
+            />
               </div>
               <p className="text-neutral-400">
                 Professional doula care agency supporting families through birth, postpartum, and beyond.

@@ -20,12 +20,18 @@ const Navigation = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center space-x-2 flex-shrink-0">
-            <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{backgroundColor: 'var(--color-primary)'}}>
-              <span className="text-white font-bold text-lg">D</span>
+            <div className="w-12 h-12 flex items-center justify-center">
+              <img 
+                src="/logo.png" 
+                alt="DoulaDoo Logo" 
+                className="w-full h-full object-contain"
+              />
             </div>
-            <span className="text-lg sm:text-xl font-bold text-neutral-900 truncate">
-              DoulaDoo
-            </span>
+            <img 
+              src="/logo_txt.png" 
+              alt="DoulaDoo" 
+              className="h-6 sm:h-7 object-contain"
+            />
           </div>
 
                   {/* Desktop Navigation */}
