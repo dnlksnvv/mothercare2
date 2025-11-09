@@ -29,11 +29,12 @@ const ServiceCard = ({ icon, title, description, features, bgColor }: ServiceCar
           </h3>
           {/* Стрелка только на мобильных */}
           <div className="lg:hidden">
-            <svg 
-              className={`w-5 h-5 text-neutral-400 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}
+              <svg 
+              className={`w-5 h-5 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}
               fill="none" 
               stroke="currentColor" 
               viewBox="0 0 24 24"
+              style={{color: 'var(--color-text-light)'}}
             >
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
             </svg>
@@ -47,10 +48,10 @@ const ServiceCard = ({ icon, title, description, features, bgColor }: ServiceCar
         ${isExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 lg:max-h-none lg:opacity-100'}
       `}>
         <div className="px-6 pb-6 lg:px-8 lg:pb-8 lg:pt-0">
-          <p className="text-sm lg:text-base text-neutral-600 leading-relaxed mb-4 lg:mb-6 text-left lg:text-center">
+          <p className="text-sm lg:text-base leading-relaxed mb-4 lg:mb-6 text-left lg:text-center" style={{color: 'var(--color-text-light)'}}>
             {description}
           </p>
-          <ul className="text-xs lg:text-sm text-neutral-600 space-y-2 text-left">
+          <ul className="text-xs lg:text-sm space-y-2 text-left" style={{color: 'var(--color-text-light)'}}>
             {features.map((feature, index) => (
               <li key={index}>• {feature}</li>
             ))}

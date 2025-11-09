@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Lora:wght@400;500;600;700&family=Playfair+Display:ital,wght@1,400;1,500;1,600&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -9,50 +9,126 @@
   }
   
   body {
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: 'Lora', 'Libre Baskerville', serif;
     transition: all 0.3s ease;
+    background-color: var(--color-background);
+    color: var(--color-text);
   }
 
-  /* Оригинальная тема (по умолчанию) */
+  main {
+    background-color: var(--color-background);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    color: var(--color-text);
+  }
+
+  p {
+    font-family: 'Lora', 'Libre Baskerville', serif;
+    color: var(--color-text);
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .accent-script {
+    font-family: 'Great Vibes', cursive;
+    font-size: 1.5em;
+    color: var(--color-primary);
+  }
+
+  blockquote {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    color: var(--color-text);
+  }
+
+  .nav-watermark {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .nav-watermark::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('/image.png');
+    background-repeat: repeat-x;
+    background-size: 420px auto;
+    background-position: center bottom;
+    opacity: 0.12;
+    pointer-events: none;
+  }
+
+  .nav-watermark > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Тёплая палитра для мам - Профессиональная схема */
   .original-theme {
-    --color-primary: #0ea5e9;
-    --color-primary-hover: #0284c7;
-    --color-secondary: #dd6b20;
-    --color-secondary-hover: #c05621;
-    --color-accent: #f0f9ff;
-    --color-accent-hover: #e0f2fe;
+    --color-primary: #E4AFA3;          /* Muted Rose */
+    --color-primary-hover: #E4AFA3;
+    --color-secondary: #F7D6C1;        /* Peach Blush */
+    --color-secondary-hover: #F7D6C1;
+    --color-accent: #F3BBA8;           /* Light Coral */
+    --color-accent-hover: #F3BBA8;
+    --color-background: #FBF9F6;       /* Cream */
+    --color-olive: #C9D2B6;            /* Olive Mist */
+    --color-olive-hover: #C9D2B6;
+    --color-text: #3F3F3F;             /* Charcoal Gray */
+    --color-text-light: #3F3F3F;
+    --color-footer: #3F3F3F;
   }
 
-  /* Пастельная тема DoulaDoo */
+  /* Тёплая палитра для мам - Профессиональная схема */
   .doula-theme {
-    --color-primary: #E4A081;          /* Терракотовый (как "Doo" в логотипе) */
-    --color-primary-hover: #D8966F;    /* Темнее для hover */
-    --color-secondary: #FDF1EB;        /* Очень светлый терракотовый для фонов */
-    --color-secondary-hover: #F5D5C6;  /* Темнее для hover */
-    --color-accent: #FDF1EB;           /* Очень светлый терракотовый для фонов */
-    --color-accent-hover: #F5D5C6;     /* Темнее для hover */
-    --color-background: #FDF1EB;       /* Очень светлый терракотовый фон */
+    --color-primary: #E4AFA3;
+    --color-primary-hover: #E4AFA3;
+    --color-secondary: #F7D6C1;
+    --color-secondary-hover: #F7D6C1;
+    --color-accent: #F3BBA8;
+    --color-accent-hover: #F3BBA8;
+    --color-background: #FBF9F6;
+    --color-olive: #C9D2B6;
+    --color-olive-hover: #C9D2B6;
+    --color-text: #3F3F3F;
+    --color-text-light: #3F3F3F;
+    --color-footer: #3F3F3F;
   }
 }
 
 @layer components {
   .btn-primary {
-    @apply text-white font-medium py-3 px-6 rounded-xl transition-colors duration-200 shadow-md hover:shadow-lg;
-    background-color: var(--color-primary);
+    @apply font-medium py-3 px-6 rounded-xl transition-colors duration-200 shadow-md hover:shadow-lg;
+    background-color: var(--color-primary) !important;
+    color: var(--color-background) !important;
+    opacity: 1 !important;
   }
   
   .btn-primary:hover {
-    background-color: var(--color-primary-hover);
+    background-color: var(--color-primary-hover) !important;
+    opacity: 1 !important;
   }
   
   .btn-secondary {
-    @apply bg-white hover:bg-neutral-50 font-medium py-3 px-6 rounded-xl border transition-all duration-200 shadow-sm hover:shadow-md;
-    color: var(--color-primary);
-    border-color: var(--color-accent);
+    @apply font-medium py-3 px-6 rounded-xl border transition-all duration-200 shadow-sm hover:shadow-md;
+    background-color: var(--color-background) !important;
+    color: var(--color-primary) !important;
+    border-color: var(--color-accent) !important;
+  }
+  
+  .btn-secondary:hover {
+    background-color: var(--color-secondary) !important;
   }
   
   .card {
-    @apply bg-white rounded-2xl shadow-card hover:shadow-card-hover transition-shadow duration-300;
+    @apply rounded-2xl shadow-card hover:shadow-card-hover transition-shadow duration-300;
+    background-color: var(--color-background) !important;
   }
   
   .section-padding {
@@ -68,18 +144,21 @@
     word-wrap: break-word;
     hyphens: auto;
     color: var(--color-primary);
+    opacity: 1 !important;
   }
   
   .heading-2 {
     @apply text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight;
     word-wrap: break-word;
     color: var(--color-primary);
+    opacity: 1 !important;
   }
   
   .heading-3 {
     @apply text-2xl sm:text-3xl font-semibold;
     word-wrap: break-word;
     color: var(--color-primary);
+    opacity: 1 !important;
   }
 
   .text-accent {
@@ -87,11 +166,23 @@
   }
 
   .bg-accent {
-    background-color: var(--color-accent);
+    background-color: var(--color-accent) !important;
+    opacity: 1 !important;
   }
 
   .bg-accent-hover:hover {
-    background-color: var(--color-accent-hover);
+    background-color: var(--color-accent-hover) !important;
+    opacity: 1 !important;
+  }
+  
+  .bg-olive {
+    background-color: var(--color-olive) !important;
+    opacity: 1 !important;
+  }
+  
+  .bg-olive-hover:hover {
+    background-color: var(--color-olive-hover) !important;
+    opacity: 1 !important;
   }
 
           .bg-pastel {
@@ -99,19 +190,31 @@
           }
 
           .hero-bg {
-            background: linear-gradient(to bottom right, #f0f9ff, #e0f2fe);
+            background: linear-gradient(135deg, #FBF9F6 0%, #F7D6C1 50%, #F3BBA8 100%);
+            opacity: 1 !important;
           }
 
           .doula-theme .hero-bg {
-            background: linear-gradient(to bottom right, var(--color-accent), var(--color-secondary));
+            background: linear-gradient(135deg, var(--color-background) 0%, var(--color-secondary) 50%, var(--color-accent) 100%);
+            opacity: 1 !important;
           }
   
   .text-body {
-    @apply text-lg text-neutral-600 leading-relaxed;
+    @apply text-lg leading-relaxed;
+    color: var(--color-text);
   }
   
   .text-body-sm {
-    @apply text-base text-neutral-600 leading-relaxed;
+    @apply text-base leading-relaxed;
+    color: var(--color-text-light);
+  }
+  
+  .bg-footer {
+    background-color: var(--color-footer) !important;
+  }
+  
+  .text-footer {
+    color: #FBF9F6;
   }
 }
 

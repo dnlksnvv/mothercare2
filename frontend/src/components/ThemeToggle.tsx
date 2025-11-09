@@ -46,14 +46,23 @@ const ThemeToggle = () => {
   return (
     <button
       onClick={toggleTheme}
-      className="flex items-center space-x-2 px-3 py-2 rounded-lg border border-neutral-200 hover:bg-neutral-50 transition-colors"
+      className="flex items-center space-x-2 px-3 py-2 rounded-lg border transition-colors"
+      style={{borderColor: 'var(--color-olive)', backgroundColor: 'transparent'}}
+      onMouseEnter={(e) => {e.currentTarget.style.backgroundColor = 'var(--color-secondary)';}}
+      onMouseLeave={(e) => {e.currentTarget.style.backgroundColor = 'transparent';}}
       title={`Switch to ${theme === 'original' ? 'Doula' : 'Original'} theme`}
     >
       <div className="flex items-center space-x-1">
-        <div className={`w-3 h-3 rounded-full ${theme === 'original' ? 'bg-primary-500' : 'bg-doula-pastel-teal'}`}></div>
-        <div className={`w-3 h-3 rounded-full ${theme === 'original' ? 'bg-secondary-500' : 'bg-doula-terracotta'}`}></div>
+        <div 
+          className="w-3 h-3 rounded-full" 
+          style={{backgroundColor: theme === 'original' ? 'var(--color-primary)' : 'var(--color-olive)'}}
+        ></div>
+        <div 
+          className="w-3 h-3 rounded-full" 
+          style={{backgroundColor: theme === 'original' ? 'var(--color-secondary)' : 'var(--color-primary)'}}
+        ></div>
       </div>
-      <span className="text-sm font-medium text-neutral-700">
+      <span className="text-sm font-medium" style={{color: 'var(--color-text)'}}>
         {theme === 'original' ? 'Original' : 'Doula'}
       </span>
     </button>

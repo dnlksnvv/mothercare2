@@ -6,57 +6,26 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Основные цвета как на Meela (оригинальная тема)
+        // The Sacred Mom's Journey - Olive Harmony палитра (только эти 6 цветов)
+        'olive-mist': '#C9D2B6',      // Olive Mist
+        'peach-blush': '#F7D6C1',     // Peach Blush
+        'cream': '#FBF9F6',           // Cream
+        'charcoal-gray': '#3F3F3F',   // Charcoal Gray
+        'muted-rose': '#E4AFA3',      // Muted Rose
+        'light-coral': '#F3BBA8',     // Light Coral
+        
+        // Алиасы для удобства (используют те же цвета)
         primary: {
-          50: '#f0f9ff',
-          100: '#e0f2fe',
-          200: '#bae6fd',
-          300: '#7dd3fc',
-          400: '#38bdf8',
-          500: '#0ea5e9', // Основной голубой
-          600: '#0284c7',
-          700: '#0369a1',
-          800: '#075985',
-          900: '#0c4a6e',
+          DEFAULT: '#E4AFA3',  // Muted Rose
         },
         secondary: {
-          50: '#fef7ee',
-          100: '#feebc8',
-          200: '#fbd38d',
-          300: '#f6ad55',
-          400: '#ed8936',
-          500: '#dd6b20', // Оранжевый акцент
-          600: '#c05621',
-          700: '#9c4221',
-          800: '#7b341e',
-          900: '#652b19',
+          DEFAULT: '#F7D6C1',  // Peach Blush
         },
-        // Пастельная тема в стиле логотипа DoulaDoo
-        doula: {
-          'soft-mint': '#FDF1EB',       // Очень светлый терракотовый (фон)
-          'terracotta': '#E4A081',      // Терракотовый (как "Doo")
-          'pastel-teal': '#FDF1EB',     // Очень светлый терракотовый (фон)
-          'warm-peach': '#F5D5C6',      // Светлый терракотовый (для градиента)
-        },
-        neutral: {
-          50: '#fafafa',
-          100: '#f5f5f5',
-          200: '#e5e5e5',
-          300: '#d4d4d4',
-          400: '#a3a3a3',
-          500: '#737373',
-          600: '#525252',
-          700: '#404040',
-          800: '#262626',
-          900: '#171717',
-        },
-        success: '#22c55e',
-        warning: '#f59e0b',
-        error: '#ef4444',
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        heading: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['Lora', 'Libre Baskerville', 'serif'],
+        heading: ['Playfair Display', 'serif'],
+        script: ['Great Vibes', 'cursive'],
       },
       fontSize: {
         'xs': ['0.75rem', { lineHeight: '1rem' }],
