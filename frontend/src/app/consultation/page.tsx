@@ -23,7 +23,7 @@ const ConsultationPage = () => {
       <Navigation />
       <AIAssistant />
 
-      <main className="pt-24">
+      <main className="pt-32">
         <section className="section-padding pb-0">
           <div className="container-custom px-4 sm:px-6 lg:px-8 text-center space-y-6">
             <h1 className="text-4xl sm:text-5xl" style={{ color: 'var(--color-text)' }}>
@@ -38,7 +38,7 @@ const ConsultationPage = () => {
 
         <section className="section-padding">
           <div className="container-custom px-4 sm:px-6 lg:px-8">
-            <div className="calendly-inline-widget" data-url={calendlySrc} style={{ minWidth: '320px', height: '1000px' }} />
+            <div className="calendly-inline-widget" data-url={calendlySrc} style={{ minWidth: '320px', height: '700px', maxHeight: '700px' }} />
             <div className="mt-6 rounded-3xl px-6 py-6 text-center" style={{ backgroundColor: 'var(--color-secondary)' }}>
               <p className="mb-3" style={{ color: 'var(--color-text)' }}>
                 Prefer email? Reach us at <a href="mailto:hello@douladoo.care">hello@douladoo.care</a>

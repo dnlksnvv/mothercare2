@@ -1,13 +1,16 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import Link from 'next/link';
+
+const MAX_MESSAGE_LENGTH = 1500;
 
 const AIAssistant = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
     {
       id: 1,
-      text: 'Hi! I\'m your Doula AI assistant. I\'m here to support you through birth, postpartum, and beyond. How can I help today?',
+      text: 'Hello! I\'m your DoulaDoo AI assistant. I can answer questions about our services, team, and how we support families through birth, postpartum, and beyond.',
       isBot: true,
     },
   ]);
@@ -15,12 +18,65 @@ const AIAssistant = () => {
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  // Load conversation history from localStorage
+  const loadHistory = () => {
+    try {
+      const savedHistory = localStorage.getItem('douladoo_chat_history');
+      
+      if (savedHistory) {
+        const history = JSON.parse(savedHistory);
+        
+        // Convert history to messages format (skip system message)
+        const historyMessages = history
+          .filter((msg: { role: string }) => msg.role !== 'system')
+          .map((msg: { role: string; content: string }, index: number) => ({
+            id: Date.now() + index, // Use timestamp for unique IDs
+            text: msg.content,
+            isBot: msg.role === 'assistant',
+          }));
+        
+        if (historyMessages.length > 0) {
+          // If we have history, replace all messages with history (no initial greeting)
+          setMessages(historyMessages);
+        }
+      }
+    } catch (e) {
+      console.error('Error loading chat history:', e);
+    }
+  };
+
+  // Save conversation history to localStorage
+  const saveHistory = (history: Array<{ role: string; content: string }>) => {
+    try {
+      // Keep last 20 messages
+      const historyToSave = history
+        .filter(msg => msg.role !== 'system')
+        .slice(-20);
+      
+      localStorage.setItem('douladoo_chat_history', JSON.stringify(historyToSave));
+    } catch (e) {
+      console.error('Error saving chat history:', e);
+    }
+  };
+
+  // Load history on mount
+  useEffect(() => {
+    loadHistory();
+  }, []);
+
+  // Reload history when chat opens
+  useEffect(() => {
+    if (isOpen) {
+      loadHistory();
+    }
+  }, [isOpen]);
+
   const quickQuestions = [
-    'What does a birth doula do?',
-    'How to prepare for postpartum?',
-    'Signs of labor beginning',
-    'Breathing techniques for birth',
-    'When to contact my doula?',
+    'What is Birth Support?',
+    'What is Postpartum Support?',
+    'What are Beyond Services?',
+    'Who is on your team?',
+    'How do I book a consultation?',
   ];
 
   // Auto-scroll to bottom when new messages arrive
@@ -46,16 +102,30 @@ const AIAssistant = () => {
 
   const handleSendMessage = async () => {
     if (!inputMessage.trim() || isLoading) return;
+    
+    // Check message length
+    if (inputMessage.length > MAX_MESSAGE_LENGTH) {
+      return; // Don't send if too long
+    }
 
+    const messageToSend = inputMessage;
+    const newMessageId = Date.now();
     const newMessage = {
-      id: messages.length + 1,
+      id: newMessageId,
       text: inputMessage,
       isBot: false,
     };
 
-    setMessages([...messages, newMessage]);
+    setMessages(prev => [...prev, newMessage]);
     setInputMessage('');
     setIsLoading(true);
+
+    // Build conversation history for API
+    const conversationHistory = messages
+      .map(msg => ({
+        role: msg.isBot ? 'assistant' : 'user',
+        content: msg.text,
+      }));
 
     try {
       const response = await fetch('/api/chat', {
@@ -63,24 +133,38 @@ const AIAssistant = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ message: inputMessage }),
+        body: JSON.stringify({ 
+          message: messageToSend,
+          conversationHistory: conversationHistory,
+        }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
+        const botResponseId = Date.now() + 1;
         const botResponse = {
-          id: messages.length + 2,
+          id: botResponseId,
           text: data.response,
           isBot: true,
         };
-        setMessages(prev => [...prev, botResponse]);
+        setMessages(prev => {
+          const updatedMessages = [...prev, botResponse];
+          // Save to localStorage
+          const historyToSave = updatedMessages.map(msg => ({
+            role: msg.isBot ? 'assistant' : 'user',
+            content: msg.text,
+          }));
+          saveHistory(historyToSave);
+          return updatedMessages;
+        });
       } else {
         throw new Error(data.error || 'Failed to get response');
       }
     } catch (error) {
+      const errorResponseId = Date.now() + 1;
       const errorResponse = {
-        id: messages.length + 2,
+        id: errorResponseId,
         text: 'I apologize, but I\'m having trouble responding right now. Please try again in a moment.',
         isBot: true,
       };
@@ -93,14 +177,22 @@ const AIAssistant = () => {
   const handleQuickQuestion = async (question: string) => {
     if (isLoading) return;
 
+    const newMessageId = Date.now();
     const newMessage = {
-      id: messages.length + 1,
+      id: newMessageId,
       text: question,
       isBot: false,
     };
 
-    setMessages([...messages, newMessage]);
+    setMessages(prev => [...prev, newMessage]);
     setIsLoading(true);
+
+    // Build conversation history for API
+    const conversationHistory = messages
+      .map(msg => ({
+        role: msg.isBot ? 'assistant' : 'user',
+        content: msg.text,
+      }));
 
     try {
       const response = await fetch('/api/chat', {
@@ -108,24 +200,38 @@ const AIAssistant = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ message: question }),
+        body: JSON.stringify({ 
+          message: question,
+          conversationHistory: conversationHistory,
+        }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
+        const botResponseId = Date.now() + 1;
         const botResponse = {
-          id: messages.length + 2,
+          id: botResponseId,
           text: data.response,
           isBot: true,
         };
-        setMessages(prev => [...prev, botResponse]);
+        setMessages(prev => {
+          const updatedMessages = [...prev, botResponse];
+          // Save to localStorage
+          const historyToSave = updatedMessages.map(msg => ({
+            role: msg.isBot ? 'assistant' : 'user',
+            content: msg.text,
+          }));
+          saveHistory(historyToSave);
+          return updatedMessages;
+        });
       } else {
         throw new Error(data.error || 'Failed to get response');
       }
     } catch (error) {
+      const errorResponseId = Date.now() + 1;
       const errorResponse = {
-        id: messages.length + 2,
+        id: errorResponseId,
         text: 'I apologize, but I\'m having trouble responding right now. Please try again in a moment.',
         isBot: true,
       };
@@ -133,6 +239,110 @@ const AIAssistant = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  // Parse markdown links and render them as clickable links
+  // Also hide "/consultation" as plain text (but not inside markdown links)
+  const parseMessage = (text: string) => {
+    const parts: (string | JSX.Element)[] = [];
+    let lastIndex = 0;
+    
+    // Match markdown links: [text](url)
+    const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+    let match;
+    const linkRanges: Array<{ start: number; end: number }> = [];
+    
+    // First pass: find all markdown links to protect them from text replacement
+    while ((match = linkRegex.exec(text)) !== null) {
+      linkRanges.push({
+        start: match.index,
+        end: match.index + match[0].length
+      });
+    }
+    
+    // Reset regex
+    linkRegex.lastIndex = 0;
+    
+    // Second pass: process links and text
+    while ((match = linkRegex.exec(text)) !== null) {
+      // Add text before the link, replacing "/consultation" only if not in a link
+      if (match.index > lastIndex) {
+        let textBefore = text.substring(lastIndex, match.index);
+        // Replace plain "/consultation" text, but only if it's not part of a markdown link
+        textBefore = textBefore.replace(/\/(consultation)\b/g, 'Free Consultation page');
+        parts.push(textBefore);
+      }
+      
+      const linkText = match[1];
+      const linkUrl = match[2];
+      
+      // Check if it's a phone link
+      if (linkUrl.startsWith('tel:')) {
+        parts.push(
+          <a
+            key={match.index}
+            href={linkUrl}
+            className="underline font-semibold"
+            style={{ color: 'var(--color-primary)' }}
+          >
+            {linkText}
+          </a>
+        );
+      }
+      // Check if it's an email link
+      else if (linkUrl.startsWith('mailto:')) {
+        parts.push(
+          <a
+            key={match.index}
+            href={linkUrl}
+            className="underline font-semibold"
+            style={{ color: 'var(--color-primary)' }}
+          >
+            {linkText}
+          </a>
+        );
+      }
+      // Check if it's an internal link (starts with /)
+      else if (linkUrl.startsWith('/')) {
+        parts.push(
+          <Link
+            key={match.index}
+            href={linkUrl}
+            className="underline font-semibold"
+            style={{ color: 'var(--color-primary)' }}
+            onClick={() => setIsOpen(false)}
+          >
+            {linkText}
+          </Link>
+        );
+      }
+      // External link
+      else {
+        parts.push(
+          <a
+            key={match.index}
+            href={linkUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline font-semibold"
+            style={{ color: 'var(--color-primary)' }}
+          >
+            {linkText}
+          </a>
+        );
+      }
+      
+      lastIndex = match.index + match[0].length;
+    }
+    
+    // Add remaining text, replacing "/consultation" if not in a link
+    if (lastIndex < text.length) {
+      let remainingText = text.substring(lastIndex);
+      remainingText = remainingText.replace(/\/(consultation)\b/g, 'Free Consultation page');
+      parts.push(remainingText);
+    }
+    
+    return parts.length > 0 ? parts : [text.replace(/\/(consultation)\b/g, 'Free Consultation page')];
   };
 
   return (
@@ -186,19 +396,49 @@ const AIAssistant = () => {
 
             {/* Messages */}
             <div className="flex-1 overflow-y-auto p-4 space-y-4">
-              {messages.map((message) => (
-                <div
-                  key={message.id}
-                  className={`flex ${message.isBot ? 'justify-start' : 'justify-end'}`}
-                >
+              {messages.map((message) => {
+                const parsedContent = message.isBot ? parseMessage(message.text) : [message.text];
+                // Check if message contains consultation link (in markdown format or plain text)
+                const hasConsultationLink = message.isBot && (
+                  message.text.includes('[Book a Free Consultation](/consultation)') ||
+                  message.text.includes('Free Consultation') ||
+                  message.text.toLowerCase().includes('consultation')
+                );
+                
+                return (
                   <div
-                    className="max-w-xs px-4 py-2 rounded-2xl"
-                    style={message.isBot ? {backgroundColor: 'var(--color-secondary)', color: 'var(--color-text)'} : {backgroundColor: 'var(--color-primary)', opacity: 1, color: 'var(--color-background)'}}
+                    key={message.id}
+                    className={`flex flex-col ${message.isBot ? 'items-start' : 'items-end'}`}
                   >
-                    <p className="text-sm">{message.text}</p>
+                    <div
+                      className={`max-w-xs px-4 py-2 rounded-2xl ${message.isBot ? '' : 'text-right'}`}
+                      style={message.isBot ? {backgroundColor: 'var(--color-secondary)', color: 'var(--color-text)'} : {backgroundColor: 'var(--color-primary)', opacity: 1, color: 'var(--color-background)'}}
+                    >
+                      <p className="text-sm whitespace-pre-wrap">
+                        {parsedContent}
+                      </p>
+                    </div>
+                    {hasConsultationLink && message.isBot && (
+                      <div className="mt-2">
+                        <Link
+                          href="/consultation"
+                          onClick={() => setIsOpen(false)}
+                          className="inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold transition-colors"
+                          style={{backgroundColor: 'var(--color-primary)', color: 'var(--color-background)'}}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.backgroundColor = 'var(--color-primary-hover)';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.backgroundColor = 'var(--color-primary)';
+                          }}
+                        >
+                          Book a Free Consultation
+                        </Link>
+                      </div>
+                    )}
                   </div>
-                </div>
-              ))}
+                );
+              })}
               
               {/* Loading indicator */}
               {isLoading && (
@@ -235,44 +475,55 @@ const AIAssistant = () => {
               </div>
 
               {/* Input */}
-              <div className="flex space-x-2">
-                <input
-                  type="text"
-                  value={inputMessage}
-                  onChange={(e) => setInputMessage(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && !isLoading && handleSendMessage()}
-                  placeholder="Ask a question..."
-                  className="flex-1 px-4 py-2 border rounded-full focus:outline-none focus:ring-2"
-                  style={{borderColor: 'var(--color-olive)', color: 'var(--color-text)'}}
-                  onFocus={(e) => {e.currentTarget.style.borderColor = 'var(--color-primary)'; e.currentTarget.style.outline = 'none';}}
-                  onBlur={(e) => {e.currentTarget.style.borderColor = 'var(--color-olive)';}}
-                />
-                <button
-                  onClick={handleSendMessage}
-                  disabled={isLoading || !inputMessage.trim()}
-                  className="w-10 h-10 disabled:cursor-not-allowed rounded-full flex items-center justify-center transition-colors"
-                  style={{backgroundColor: isLoading || !inputMessage.trim() ? 'var(--color-olive)' : 'var(--color-primary)', opacity: 1, color: isLoading || !inputMessage.trim() ? 'var(--color-text)' : 'var(--color-background)'}}
-                  onMouseEnter={(e) => {
-                    if (!isLoading && inputMessage.trim()) {
-                      e.currentTarget.style.backgroundColor = 'var(--color-primary-hover)';
-                      e.currentTarget.style.opacity = '1';
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (!isLoading && inputMessage.trim()) {
-                      e.currentTarget.style.backgroundColor = 'var(--color-primary)';
-                      e.currentTarget.style.opacity = '1';
-                    }
-                  }}
-                >
-                  {isLoading ? (
-                    <div className="w-4 h-4 border-2 border-t-transparent rounded-full animate-spin" style={{borderColor: 'var(--color-background)', borderTopColor: 'transparent'}}></div>
-                  ) : (
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                    </svg>
-                  )}
-                </button>
+              <div className="flex flex-col space-y-2">
+                {inputMessage.length > MAX_MESSAGE_LENGTH && (
+                  <p className="text-xs" style={{ color: 'var(--color-primary)' }}>
+                    Message is too long. Maximum {MAX_MESSAGE_LENGTH} characters. ({inputMessage.length}/{MAX_MESSAGE_LENGTH})
+                  </p>
+                )}
+                <div className="flex space-x-2">
+                  <input
+                    type="text"
+                    value={inputMessage}
+                    onChange={(e) => setInputMessage(e.target.value)}
+                    onKeyPress={(e) => e.key === 'Enter' && !isLoading && inputMessage.length <= MAX_MESSAGE_LENGTH && handleSendMessage()}
+                    placeholder="Ask a question..."
+                    className="flex-1 px-4 py-2 border rounded-full focus:outline-none focus:ring-2"
+                    style={{
+                      borderColor: inputMessage.length > MAX_MESSAGE_LENGTH ? 'var(--color-primary)' : 'var(--color-olive)',
+                      color: 'var(--color-text)'
+                    }}
+                    onFocus={(e) => {e.currentTarget.style.borderColor = 'var(--color-primary)'; e.currentTarget.style.outline = 'none';}}
+                    onBlur={(e) => {e.currentTarget.style.borderColor = inputMessage.length > MAX_MESSAGE_LENGTH ? 'var(--color-primary)' : 'var(--color-olive)';}}
+                    maxLength={MAX_MESSAGE_LENGTH + 100} // Allow typing but show warning
+                  />
+                  <button
+                    onClick={handleSendMessage}
+                    disabled={isLoading || !inputMessage.trim() || inputMessage.length > MAX_MESSAGE_LENGTH}
+                    className="w-10 h-10 disabled:cursor-not-allowed rounded-full flex items-center justify-center transition-colors"
+                    style={{backgroundColor: isLoading || !inputMessage.trim() || inputMessage.length > MAX_MESSAGE_LENGTH ? 'var(--color-olive)' : 'var(--color-primary)', opacity: 1, color: isLoading || !inputMessage.trim() || inputMessage.length > MAX_MESSAGE_LENGTH ? 'var(--color-text)' : 'var(--color-background)'}}
+                    onMouseEnter={(e) => {
+                      if (!isLoading && inputMessage.trim() && inputMessage.length <= MAX_MESSAGE_LENGTH) {
+                        e.currentTarget.style.backgroundColor = 'var(--color-primary-hover)';
+                        e.currentTarget.style.opacity = '1';
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!isLoading && inputMessage.trim() && inputMessage.length <= MAX_MESSAGE_LENGTH) {
+                        e.currentTarget.style.backgroundColor = 'var(--color-primary)';
+                        e.currentTarget.style.opacity = '1';
+                      }
+                    }}
+                  >
+                    {isLoading ? (
+                      <div className="w-4 h-4 border-2 border-t-transparent rounded-full animate-spin" style={{borderColor: 'var(--color-background)', borderTopColor: 'transparent'}}></div>
+                    ) : (
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                      </svg>
+                    )}
+                  </button>
+                </div>
               </div>
             </div>
           </div>

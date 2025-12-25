@@ -56,17 +56,26 @@
     content: '';
     position: absolute;
     inset: 0;
-    background-image: url('/image.png');
+    background-image: url('/DoulaDoo_patterns_128.png');
     background-repeat: repeat-x;
-    background-size: 420px auto;
-    background-position: center bottom;
-    opacity: 0.12;
+    background-size: auto 128px;
+    background-position: center center;
+    opacity: 0.6;
     pointer-events: none;
   }
 
   .nav-watermark > * {
     position: relative;
     z-index: 1;
+  }
+
+  .nav-watermark.menu-open::before {
+    display: none;
+  }
+
+  .nav-watermark.menu-open {
+    border-bottom-left-radius: 1.5rem;
+    border-bottom-right-radius: 1.5rem;
   }
 
   /* Тёплая палитра для мам - Профессиональная схема */

@@ -14,12 +14,11 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="mt-24" style={{ backgroundColor: 'var(--color-background)', color: 'var(--color-text)' }}>
+    <footer style={{ backgroundColor: 'var(--color-background)', color: 'var(--color-text)' }}>
       <div className="container-custom px-4 sm:px-6 lg:px-8 py-12 grid gap-8 md:grid-cols-2">
         <div className="space-y-4">
           <div className="flex items-center space-x-3">
-            <img src="/logo.png" alt="DoulaDoo Logo" className="h-12 w-12 object-contain" />
-            <img src="/logo_txt.png" alt="DoulaDoo" className="h-7 object-contain" />
+            <img src="/DoulaDoo_LOGO_goriz.svg" alt="DoulaDoo Logo" className="h-12 object-contain" />
           </div>
           <p className="text-sm leading-relaxed" style={{ color: 'var(--color-text)' }}>
             DoulaDoo offers calm, continuous care for mothers and families—before birth, through postpartum, and every

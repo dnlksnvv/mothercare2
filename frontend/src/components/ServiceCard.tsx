@@ -29,7 +29,7 @@ const ServiceCard = ({ icon, title, description, features, bgColor }: ServiceCar
           </h3>
           {/* Стрелка только на мобильных */}
           <div className="lg:hidden">
-              <svg 
+            <svg 
               className={`w-5 h-5 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}
               fill="none" 
               stroke="currentColor" 
