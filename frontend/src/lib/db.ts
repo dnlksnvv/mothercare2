@@ -35,9 +35,9 @@ function getDb(): Database.Database {
 
 export interface RateLimitInfo {
   ip: string;
-  requestCount: number;
-  firstRequestDate: string;
-  lastRequestDate: string;
+  request_count: number;
+  first_request_date: string;
+  last_request_date: string;
 }
 
 const MAX_REQUESTS_PER_DAY = 50;
