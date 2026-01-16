@@ -27,14 +27,15 @@ RUN adduser --system --uid 1001 nextjs
 COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+COPY --from=builder --chown=nextjs:nodejs /app/server.js ./server.js
 
 RUN mkdir -p /app/data && chown -R nextjs:nodejs /app/data
 
 USER nextjs
 
-EXPOSE 8080
-
 ENV PORT=8080
 ENV HOSTNAME="0.0.0.0"
+
+EXPOSE 8080
 
 CMD ["node", "server.js"]
