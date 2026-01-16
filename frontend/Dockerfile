@@ -24,18 +24,15 @@ RUN apk add --no-cache sqlite-libs
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-COPY --from=builder /app/public ./public
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-COPY --from=builder --chown=nextjs:nodejs /app/server.js ./server.js
+COPY --from=builder /app/package*.json ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
+COPY --from=builder --chown=nextjs:nodejs /app/public ./public
+COPY --from=deps --chown=nextjs:nodejs /app/node_modules ./node_modules
 
 RUN mkdir -p /app/data && chown -R nextjs:nodejs /app/data
 
 USER nextjs
 
-ENV PORT=8080
-ENV HOSTNAME="0.0.0.0"
-
 EXPOSE 8080
 
-CMD ["node", "server.js"]
+CMD ["npm", "start"]
