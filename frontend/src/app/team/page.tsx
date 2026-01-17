@@ -88,7 +88,7 @@ const TeamPage = () => {
               <p className="text-base leading-relaxed mb-6" style={{ color: 'var(--color-text)' }}>
                 Meet with our team to craft a circle of support tailored to your hopes, your rhythm, and your family.
               </p>
-              <a href="mailto:hello@douladoo.care" className="btn-secondary inline-flex px-6 py-3 text-base">
+              <a href="mailto:love@douladoo.com" className="btn-secondary inline-flex px-6 py-3 text-base">
                 Write to Us
               </a>
             </div>

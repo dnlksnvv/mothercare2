@@ -41,7 +41,7 @@ const Navigation = () => {
           </Link>
 
           <div className="hidden lg:flex items-center space-x-6 xl:space-x-8">
-            {navItems.map((item) => (
+            {navItems.filter(item => item.href !== '/team').map((item) => (
               <Link
                 key={item.label}
                 href={item.href}
@@ -94,7 +94,7 @@ const Navigation = () => {
           className={`lg:hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-[600px] opacity-100' : 'max-h-0 opacity-0'} overflow-hidden mobile-menu`}
         >
           <div className="pt-4 pb-10 space-y-3 border-t" style={{ borderColor: 'var(--color-olive)' }}>
-            {navItems.map((item) => (
+            {navItems.filter(item => item.href !== '/team').map((item) => (
               <Link
                 key={item.label}
                 href={item.href}

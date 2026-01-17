@@ -32,7 +32,7 @@ const Footer = () => {
               Navigate
             </h3>
             <ul className="grid grid-cols-2 gap-x-8 gap-y-2 text-sm">
-              {links.map((link) => (
+              {links.filter(link => link.href !== '/team').map((link) => (
                 <li key={link.label}>
                   <Link href={link.href} className="hover:opacity-70 transition-opacity">
                     {link.label}
@@ -46,8 +46,16 @@ const Footer = () => {
               Contact
             </h3>
             <ul className="space-y-2 text-sm">
-              <li>+1 (555) 123-4567</li>
-              <li>hello@douladoo.care</li>
+              <li>
+                <a href="tel:+16615900809" className="hover:opacity-70 transition-opacity">
+                  +1 661-590-0809
+                </a>
+              </li>
+              <li>
+                <a href="mailto:love@douladoo.com" className="hover:opacity-70 transition-opacity">
+                  love@douladoo.com
+                </a>
+              </li>
               <li>New York, NY</li>
             </ul>
           </div>

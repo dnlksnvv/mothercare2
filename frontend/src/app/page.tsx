@@ -42,23 +42,38 @@ export default function HomePage() {
                 className="w-full h-auto object-contain"
               />
               <div 
-                className="absolute inset-0 flex flex-col justify-end"
+                className="absolute inset-0 flex flex-col justify-end sm:justify-between"
                 style={{
-                  background: 'linear-gradient(135deg, rgba(247,214,193,0.45), rgba(251,249,246,0.92))',
+                  background: 'linear-gradient(135deg, rgba(247, 214, 193, 0.45) 40%, rgba(251, 249, 246, 0.92) 100%)',
                 }}
               >
-                <div className="w-full py-12">
+                <div className="w-full pt-12 hidden sm:flex">
+                  <div className="px-4 sm:px-6 lg:px-8">
+                    <div className="space-y-2">
+                      <h2 className="text-5xl sm:text-6xl lg:text-7xl leading-tight" style={{ color: 'var(--color-text)' }}>
+                        Sacred Pregnancy.
+                      </h2>
+                      <h2 className="text-4xl sm:text-5xl lg:text-6xl leading-tight" style={{ color: 'var(--color-text)' }}>
+                        Empowered Birth.
+                      </h2>
+                      <h2 className="text-3xl sm:text-4xl lg:text-5xl leading-tight" style={{ color: 'var(--color-text)' }}>
+                        Gentle Postpartum.
+                      </h2>
+                    </div>
+                  </div>
+                </div>
+                <div className="w-full pt-12 pb-4 sm:py-12">
                   <div className="px-4 sm:px-6 lg:px-8">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-16">
                       <div className="flex justify-center">
-                        <Link href="/consultation" className="btn-primary px-6 py-3 text-lg sm:text-xl text-center w-full">
+                        <Link href="/consultation" className="btn-primary px-6 py-3 text-base sm:text-base md:text-lg lg:text-xl text-center w-full whitespace-nowrap">
                           Book free consultation
                         </Link>
                       </div>
                       <div className="flex justify-center">
                         <Link
                           href="/#journey"
-                          className="btn-secondary px-6 py-3 text-lg sm:text-xl text-center w-full"
+                          className="btn-secondary px-6 py-3 text-base sm:text-base md:text-lg lg:text-xl text-center w-full whitespace-nowrap"
                           style={{ borderColor: 'var(--color-olive)' }}
                         >
                           Discover services

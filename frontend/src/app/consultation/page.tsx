@@ -43,7 +43,7 @@ const ConsultationPage = () => {
             </div>
             <div className="mt-6 rounded-3xl px-6 py-6 text-center" style={{ backgroundColor: 'var(--color-secondary)' }}>
               <p className="mb-3" style={{ color: 'var(--color-text)' }}>
-                Prefer email? Reach us at <a href="mailto:hello@douladoo.care">hello@douladoo.care</a>
+                Prefer email? Reach us at <a href="mailto:love@douladoo.com">love@douladoo.com</a>
               </p>
               <a
                 href={calendlySrc}
