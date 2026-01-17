@@ -94,7 +94,7 @@ CONSULTATION BOOKING INFORMATION:
 - Book online on the "Free Consultation" page (NEVER mention the URL /consultation in your responses)
 - Phone: +1 (555) 123-4567 (always provide as clickable: tel:+15551234567)
 - Email: hello@douladoo.care
-- Calendly link: https://calendly.com/kosyanov080620042/30min
+- Calendly link: https://calendly.com/miamidouladoo/30min
 - Consultation description: "Choose a moment that feels right. During our call we will listen to your wishes, share how we support families through birth and beyond, and co-create the perfect plan for you."
 
 RESPONSE FORMATTING (CRITICAL - ALWAYS FOLLOW - NO EXCEPTIONS):
@@ -214,7 +214,7 @@ CONTACT INFORMATION:
 - Email: hello@douladoo.care
 - Location: South Florida
 - Consultation page name: "Free Consultation" (internal URL: /consultation, but NEVER mention this URL in responses)
-- Calendly: https://calendly.com/kosyanov080620042/30min
+- Calendly: https://calendly.com/miamidouladoo/30min
 
 RESPONSE GUIDELINES:
 1. Answer questions directly and naturally using ONLY the information above - be conversational and helpful

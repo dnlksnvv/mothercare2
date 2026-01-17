@@ -228,16 +228,24 @@
 }
 
 /* Calendly стили - убираем скроллинг и настраиваем высоту */
+.calendly-inline-widget {
+  background: transparent !important;
+  overflow: hidden !important;
+  height: 100% !important;
+}
+
 .calendly-inline-widget,
 .calendly-inline-widget iframe {
   overflow: hidden !important;
   height: 100% !important;
+  background: transparent !important;
 }
 
 .calendly-inline-widget iframe {
   border: none !important;
   border-radius: 8px !important;
   min-height: 1000px !important;
+  background: transparent !important;
 }
 
 /* Убираем внутренний скроллинг Calendly */
