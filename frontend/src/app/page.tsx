@@ -33,11 +33,11 @@ export default function HomePage() {
       <AIAssistant />
 
       <main className="pt-32">
-        <section className="section-padding px-4 sm:px-6 lg:px-8">
+        <section className="section-padding px-4 sm:px-6 lg:px-8 pb-0">
           <div className="w-full max-w-none">
             <div className="rounded-[32px] overflow-hidden relative w-full" style={{ border: '1px solid var(--color-olive)' }}>
               <img
-                src="/img_main.jpeg"
+                src="/img_main.jpg"
                 alt="Sacred Pregnancy, Empowered Birth, Gentle Postpartum"
                 className="w-full h-auto object-contain"
               />
