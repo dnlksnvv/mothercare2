@@ -56,7 +56,7 @@ const Footer = () => {
                   love@douladoo.com
                 </a>
               </li>
-              <li>New York, NY</li>
+              <li>Miami, FL</li>
             </ul>
           </div>
         </div>
