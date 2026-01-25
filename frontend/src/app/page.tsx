@@ -145,7 +145,24 @@ export default function HomePage() {
                         className="inline-flex items-center text-sm font-semibold gap-1"
                         style={{ color: 'var(--color-primary)' }}
                       >
-                        Explore the details ↗
+                        Explore the details
+                        <svg
+                          width="16"
+                          height="16"
+                          viewBox="0 0 16 16"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          style={{ color: 'var(--color-primary)' }}
+                          className="inline-block"
+                        >
+                          <path
+                            d="M4 12L12 4M12 4H6M12 4V10"
+                            stroke="currentColor"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
                       </div>
                     </div>
                   </article>
