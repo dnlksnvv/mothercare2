@@ -32,7 +32,7 @@ const Footer = () => {
               Navigate
             </h3>
             <ul className="grid grid-cols-2 gap-x-8 gap-y-2 text-sm">
-              {links.filter(link => link.href !== '/team').map((link) => (
+              {links.map((link) => (
                 <li key={link.label}>
                   <Link href={link.href} className="hover:opacity-70 transition-opacity">
                     {link.label}
