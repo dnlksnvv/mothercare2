@@ -15,7 +15,7 @@ type TeamMember = {
 const teamMembers: TeamMember[] = [
   {
     name: 'Zhanna – The Ocean',
-    role: 'Birth & Postpartum Doula · Dancing for Birth Instructor · Russian • English',
+    role: 'Certified Birth & Postpartum Doula · Dancing for Birth Instructor · Russian • English',
     bio: 'Zhanna is the ocean – calm at the surface, powerful at the core. A mother of three with personal experience of both cesarean and VBAC births, she understands how vulnerable and transformative this journey can be. In birth, she is rhythm and anchor, a presence that steadies the wave and helps women trust their strength and move through labour with confidence. In postpartum, she becomes the warm tide – protective, gentle, and watchful, safeguarding rest, supporting recovery, nurturing bonding, and creating emotional calm in the earliest days of motherhood. With her, mothers feel powerful, supported, and never alone.',
     image: '/team1.jpg',
   },
@@ -33,7 +33,7 @@ const teamMembers: TeamMember[] = [
   },
   {
     name: 'Albina – The Moon',
-    role: 'Certified Birth & Postpartum Doula · Russian • English',
+    role: 'Certified Birth & Postpartum Doula · Russian • English • Chinese',
     bio: 'Albina is the quiet depth beneath the surface. A mother of three and a specialist in hypnosis, she understands how deeply the subconscious mind influences a woman’s experience of birth and motherhood. In birth, she supports through grounding techniques, focused relaxation, and emotional reassurance, helping mother and baby move through the experience in calm connection. In postpartum, she holds space for emotional recovery while supporting baby’s gentle transition into the world, creating an atmosphere of safety and emotional balance for both.',
     image: '/team4.jpg',
   },
@@ -48,7 +48,14 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
       style={{ backgroundColor: 'var(--color-background)' }}
     >
       <div className="w-full aspect-[3/4] overflow-hidden">
-        <img src={member.image} alt={member.name} className="w-full h-full object-cover" />
+        <img
+          src={member.image}
+          alt={member.name}
+          className="w-full h-full object-cover"
+          style={{
+            objectPosition: member.name === 'Zhanna – The Ocean' ? '50% 80%' : '50% 50%',
+          }}
+        />
       </div>
       <div className="p-6 space-y-3 flex-1 flex flex-col">
         <h2 className="text-2xl" style={{ color: 'var(--color-text)' }}>
@@ -81,14 +88,55 @@ const TeamPage = () => {
       <Navigation />
       <AIAssistant />
 
-      <main className="pt-24">
+      <main className="pt-32">
         <section className="section-padding">
-          <div className="container-custom px-4 sm:px-6 lg:px-8 columns-1 md:columns-2 xl:columns-3 gap-8">
-            {teamMembers.map((member) => (
-              <div key={member.name} className="mb-8 break-inside-avoid">
-                <TeamCard member={member} />
+          <div className="container-custom px-4 sm:px-6 lg:px-8 space-y-12">
+            <div className="grid lg:grid-cols-2 gap-12 items-stretch">
+              <div className="space-y-6">
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl" style={{ color: 'var(--color-text)' }}>
+                  This is not just a professional collective.
+                  <br />
+                  It is a circle.
+                </h2>
+                <p className="text-base sm:text-lg leading-relaxed" style={{ color: 'var(--color-text)' }}>
+                  A circle of women who have chosen to walk alongside mothers during one of life’s most transformative moments.
+                </p>
+                <p className="text-base sm:text-lg leading-relaxed" style={{ color: 'var(--color-text)' }}>
+                  We grow together.
+                  <br />
+                  We lean on one another.
+                  <br />
+                  We hold space for each other — so that every woman who enters our care feels grounded, safe, and deeply seen.
+                </p>
               </div>
-            ))}
+              <div className="space-y-4 rounded-3xl px-6 py-8" style={{ backgroundColor: 'var(--color-secondary)' }}>
+                <ul className="space-y-3" style={{ color: 'var(--color-text)' }}>
+                  <li className="flex items-start">
+                    <span className="mr-3 shrink-0" style={{ color: 'var(--color-primary)' }}>•</span>
+                    <span className="text-base leading-relaxed">Our collective is rooted in trust, compassion, and a shared passion for serving families with heart.</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="mr-3 shrink-0" style={{ color: 'var(--color-primary)' }}>•</span>
+                    <span className="text-base leading-relaxed">Like elements in nature — ocean, earth, light, and warmth — we support families in different ways, yet move with the same intention: care, trust, and gentle presence.</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="mr-3 shrink-0" style={{ color: 'var(--color-primary)' }}>•</span>
+                    <span className="text-base leading-relaxed font-semibold">We are Elements of Care Collective!</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="mr-3 shrink-0" style={{ color: 'var(--color-primary)' }}>•</span>
+                    <span className="text-base leading-relaxed font-semibold">Meet our Doulas and find the one whose energy feels like home:</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-4">
+              {teamMembers.map((member) => (
+                <div key={member.name} className="mb-8 break-inside-avoid">
+                  <TeamCard member={member} />
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
