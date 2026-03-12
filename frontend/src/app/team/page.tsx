@@ -53,7 +53,7 @@ const TeamCard = ({
       className="rounded-3xl overflow-hidden shadow-card flex flex-col"
       style={{ backgroundColor: 'var(--color-background)' }}
     >
-      <div className="w-full aspect-[3/4] overflow-hidden">
+      <div className="w-full aspect-[3/4] overflow-hidden shrink-0">
         <img
           src={member.image}
           alt={member.name}
@@ -63,7 +63,7 @@ const TeamCard = ({
           }}
         />
       </div>
-      <div className="px-6 pt-6 pb-4 flex-1 flex flex-col">
+      <div className="px-6 pt-6 pb-4 flex-1 flex flex-col min-h-[200px]">
         <div className="space-y-3">
           <h2 className="text-2xl" style={{ color: 'var(--color-text)' }}>
             {member.name}
