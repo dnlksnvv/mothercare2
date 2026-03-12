@@ -39,9 +39,15 @@ const teamMembers: TeamMember[] = [
   },
 ];
 
-const TeamCard = ({ member }: { member: TeamMember }) => {
-  const [expanded, setExpanded] = useState(false);
-
+const TeamCard = ({
+  member,
+  expanded,
+  onToggle,
+}: {
+  member: TeamMember;
+  expanded: boolean;
+  onToggle: () => void;
+}) => {
   return (
     <div
       className="rounded-3xl overflow-hidden shadow-card flex flex-col"
@@ -53,26 +59,28 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
           alt={member.name}
           className="w-full h-full object-cover"
           style={{
-            objectPosition: member.name === 'Zhanna – The Ocean' ? '50% 80%' : '50% 50%',
+            objectPosition: member.name === 'Zhanna – The Ocean' ? '50% 0%' : '50% 50%',
           }}
         />
       </div>
-      <div className="p-6 space-y-3 flex-1 flex flex-col">
-        <h2 className="text-2xl" style={{ color: 'var(--color-text)' }}>
-          {member.name}
-        </h2>
-        <p className="text-sm uppercase tracking-wide" style={{ color: 'var(--color-primary)' }}>
-          {member.role}
-        </p>
-        {expanded && (
-          <p className="text-sm leading-relaxed" style={{ color: 'var(--color-text)' }}>
-            {member.bio}
+      <div className="px-6 pt-6 pb-4 flex-1 flex flex-col">
+        <div className="space-y-3">
+          <h2 className="text-2xl" style={{ color: 'var(--color-text)' }}>
+            {member.name}
+          </h2>
+          <p className="text-sm uppercase tracking-wide" style={{ color: 'var(--color-primary)' }}>
+            {member.role}
           </p>
-        )}
+          {expanded && (
+            <p className="text-sm leading-relaxed" style={{ color: 'var(--color-text)' }}>
+              {member.bio}
+            </p>
+          )}
+        </div>
         <button
           type="button"
-          onClick={() => setExpanded((prev) => !prev)}
-          className="mt-2 text-sm font-semibold self-start underline underline-offset-4"
+          onClick={onToggle}
+          className="mt-auto text-sm font-semibold self-start underline underline-offset-4"
           style={{ color: 'var(--color-primary)' }}
         >
           {expanded ? 'Hide story' : 'Read full story'}
@@ -83,6 +91,8 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
 };
 
 const TeamPage = () => {
+  const [expandedName, setExpandedName] = useState<string | null>(null);
+
   return (
     <div style={{ backgroundColor: 'var(--color-background)' }}>
       <Navigation />
@@ -130,10 +140,16 @@ const TeamPage = () => {
                 </ul>
               </div>
             </div>
-            <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-4">
+            <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-4 items-start">
               {teamMembers.map((member) => (
                 <div key={member.name} className="mb-8 break-inside-avoid">
-                  <TeamCard member={member} />
+                  <TeamCard
+                    member={member}
+                    expanded={expandedName === member.name}
+                    onToggle={() =>
+                      setExpandedName((prev) => (prev === member.name ? null : member.name))
+                    }
+                  />
                 </div>
               ))}
             </div>
